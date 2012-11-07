@@ -9,6 +9,9 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+import com.mbl111.ggo12.gfx.Bitmap;
+import com.mbl111.ggo12.gfx.Screen;
+
 public class Game extends Canvas implements Runnable {
 
 	public static final int GAME_WIDTH = 220;
@@ -23,6 +26,7 @@ public class Game extends Canvas implements Runnable {
 	private int fps;
 	private int ups;
 	private int gameTicks;
+	private Screen screen;
 
 	public Game() {
 		Dimension d = new Dimension(GAME_WIDTH * SCALE, GAME_HEIGHT * SCALE);
@@ -30,12 +34,13 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(d);
 		setMaximumSize(d);
 		setMinimumSize(d);
-		
+
 	}
 
 	public void createWindow() {
 		frame = new JFrame(GAME_NAME);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		// frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setResizable(false);
 		frame.addWindowListener(new GameCloseHandler(this));
 		frame.setLayout(new BorderLayout());
 		frame.add(this, BorderLayout.CENTER);
@@ -56,6 +61,10 @@ public class Game extends Canvas implements Runnable {
 		running = false;
 	}
 
+	public void init() {
+		screen = new Screen(GAME_WIDTH, GAME_HEIGHT);
+	}
+
 	public void run() {
 
 		double nsPerTick = 1000000000.0 / 60.0;
@@ -64,6 +73,8 @@ public class Game extends Canvas implements Runnable {
 		long lastTimer = System.currentTimeMillis();
 		int frames = 0;
 		int ticks = 0;
+
+		init();
 
 		while (running && !CLOSE_REQUESTED) {
 
@@ -82,11 +93,11 @@ public class Game extends Canvas implements Runnable {
 				shouldRender = true;
 			}
 
-			 try {
-			 Thread.sleep(1L);
-			 } catch (InterruptedException e) {
-			 e.printStackTrace();
-			 }
+			try {
+				Thread.sleep(1L);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 
 			if (shouldRender) {
 				render();
@@ -121,8 +132,19 @@ public class Game extends Canvas implements Runnable {
 		}
 		Graphics g = bs.getDrawGraphics();
 		g.fillRect(0, 0, getWidth(), getHeight());
-		g.setColor(Color.CYAN);
-		g.drawString("Fps: " + this.fps, 10, 10);
+
+		Bitmap bm = new Bitmap(2, 2);
+		bm.clear(0xFF00FFFF);
+
+		screen.draw(bm, 3, 3, 0);
+
+		int ww = GAME_WIDTH * SCALE;
+		int hh = GAME_HEIGHT * SCALE;
+		int xo = (getWidth() - ww) / 2;
+		int yo = (getHeight() - hh) / 2;
+
+		g.drawImage(screen.image, xo, yo, ww, hh, null);
+
 		bs.show();
 		g.dispose();
 
