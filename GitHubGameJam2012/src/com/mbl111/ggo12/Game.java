@@ -9,6 +9,7 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+import com.mbl111.ggo12.gfx.Art;
 import com.mbl111.ggo12.gfx.Bitmap;
 import com.mbl111.ggo12.gfx.Screen;
 
@@ -133,10 +134,16 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.fillRect(0, 0, getWidth(), getHeight());
 
-		Bitmap bm = new Bitmap(2, 2);
-		bm.clear(0xFF00FFFF);
 
-		screen.draw(bm, 3, 3, 0);
+		int fi = 0;
+		for (int y = -1; y < GAME_HEIGHT / 16; y++){
+			for (int x = -1; x < GAME_WIDTH / 16; x++){
+				fi++;
+				//screen.draw(Art.TILES[0][0], x * 16 + 16, y * 16 + 16, fi % 4);
+				screen.draw(Art.TILES[1][0], x * 16 + 16, y * 16 + 16, fi % 4);
+			}	
+		}
+		
 
 		int ww = GAME_WIDTH * SCALE;
 		int hh = GAME_HEIGHT * SCALE;
