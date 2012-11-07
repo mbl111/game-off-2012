@@ -1,5 +1,6 @@
 package com.mbl111.ggo12;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -35,7 +36,8 @@ public class Game extends Canvas implements Runnable {
 		frame = new JFrame(GAME_NAME);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.addWindowListener(new GameCloseHandler(this));
-		frame.add(this);
+		frame.setLayout(new BorderLayout());
+		frame.add(this, BorderLayout.CENTER);
 		frame.pack();
 
 		frame.setVisible(true);
@@ -79,11 +81,11 @@ public class Game extends Canvas implements Runnable {
 				shouldRender = true;
 			}
 
-			// try {
-			// Thread.sleep(0);
-			// } catch (InterruptedException e) {
-			// e.printStackTrace();
-			// }
+			 try {
+			 Thread.sleep(1L);
+			 } catch (InterruptedException e) {
+			 e.printStackTrace();
+			 }
 
 			if (shouldRender) {
 				render();
