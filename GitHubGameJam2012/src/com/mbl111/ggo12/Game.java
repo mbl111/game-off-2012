@@ -30,6 +30,7 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(d);
 		setMaximumSize(d);
 		setMinimumSize(d);
+		
 	}
 
 	public void createWindow() {
