@@ -174,7 +174,7 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.fillRect(0, 0, getWidth(), getHeight());
 
-		screen.clear(0xFF111111);
+		screen.clear(0xFF333333);
 		
 		if (menuStack.getMenuSize() > 0) {
 			menuStack.render(screen);
