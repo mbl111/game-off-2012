@@ -2,7 +2,6 @@ package com.mbl111.ggo12;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -10,8 +9,10 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
 import com.mbl111.ggo12.gfx.Art;
-import com.mbl111.ggo12.gfx.Bitmap;
 import com.mbl111.ggo12.gfx.Screen;
+import com.mbl111.ggo12.gfx.menu.ExceptionMenu;
+import com.mbl111.ggo12.gfx.menu.Menu;
+import com.mbl111.ggo12.gfx.menu.MenuStack;
 
 public class Game extends Canvas implements Runnable {
 
@@ -30,6 +31,7 @@ public class Game extends Canvas implements Runnable {
 	private Screen screen;
 	private int[][] tiles;
 	private int[][] data;
+	private MenuStack menuStack = new MenuStack(this);
 
 	public Game() {
 		Dimension d = new Dimension(GAME_WIDTH * SCALE, GAME_HEIGHT * SCALE);
@@ -66,17 +68,17 @@ public class Game extends Canvas implements Runnable {
 
 	public void init() {
 		screen = new Screen(GAME_WIDTH, GAME_HEIGHT);
-		
+
 		data = new int[GAME_WIDTH / 16 + 1][GAME_HEIGHT / 16 + 1];
 		tiles = new int[GAME_WIDTH / 16 + 1][GAME_HEIGHT / 16 + 1];
-		
+
 		for (int y = 0; y < GAME_HEIGHT / 16 + 1; y++) {
 			for (int x = 0; x < GAME_WIDTH / 16 + 1; x++) {
 				data[x][y] = 0;
 				tiles[x][y] = 3;
 			}
 		}
-		
+
 		tiles[0][0] = 0;
 		tiles[0][1] = 0;
 		tiles[0][2] = 0;
@@ -86,7 +88,7 @@ public class Game extends Canvas implements Runnable {
 		tiles[1][4] = 1;
 		tiles[2][4] = 1;
 		tiles[3][4] = 1;
-		
+
 	}
 
 	public void run() {
@@ -103,43 +105,59 @@ public class Game extends Canvas implements Runnable {
 		while (running && !CLOSE_REQUESTED) {
 
 			// if (!hasFocus()) keys.release();
-
-			long now = System.nanoTime();
-			unprocessed += (now - lastTime) / nsPerTick;
-			lastTime = now;
-			boolean shouldRender = !limitFps;
-
-			while (unprocessed >= 1) {
-				ticks++;
-				gameTicks++;
-				tick();
-				unprocessed -= 1;
-				shouldRender = true;
-			}
-
 			try {
-				Thread.sleep(1L);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+				long now = System.nanoTime();
+				unprocessed += (now - lastTime) / nsPerTick;
+				lastTime = now;
+				boolean shouldRender = !limitFps;
 
-			if (shouldRender) {
-				render();
-				frames++;
-			}
+				while (unprocessed >= 1) {
+					ticks++;
+					gameTicks++;
+					tick();
+					unprocessed -= 1;
+					shouldRender = true;
+				}
 
-			if (System.currentTimeMillis() - lastTimer > 1000) {
-				lastTimer += 1000;
-				this.fps = frames;
-				this.ups = ticks;
-				System.out.println("Updates " + this.ups + " - Frames " + this.fps);
-				frames = 0;
-				ticks = 0;
-			}
+				try {
+					Thread.sleep(1L);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 
+				if (shouldRender) {
+					render();
+					frames++;
+				}
+
+				if (System.currentTimeMillis() - lastTimer > 1000) {
+					lastTimer += 1000;
+					this.fps = frames;
+					this.ups = ticks;
+					System.out.println("Updates " + this.ups + " - Frames " + this.fps);
+					frames = 0;
+					ticks = 0;
+				}
+			} catch (Exception e) {
+				setMenu(new ExceptionMenu(e));
+				requestClose();
+				try {
+					Thread.sleep(60 * 5);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
 		}
 
 		System.exit(0);
+	}
+
+	public void setMenu(Menu menu) {
+		if (menu == null) {
+			menuStack.removeTopMenu();
+		} else {
+			menuStack.addMenu(menu);
+		}
 	}
 
 	private void tick() {
