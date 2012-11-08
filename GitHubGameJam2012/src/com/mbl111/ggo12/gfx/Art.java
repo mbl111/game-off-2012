@@ -10,6 +10,7 @@ import com.mbl111.ggo12.Game;
 public class Art {
 
 	public static Bitmap[][] TILES = load(16, 16, "/tiles.png");
+	public static Bitmap[][] FONT = load(8, 8, "/font.png");
 
 	public static Bitmap[][] load(int sx, int sy, int w, int h, String file) {
 		try {

@@ -13,11 +13,11 @@ public class Screen extends Bitmap {
 		super(w, h);
 		image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-		
+
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0xFFFFFFFF;
 		}
-		
+
 	}
 
 	public void draw(Bitmap bitmap, int x, int y, int data) {
@@ -29,4 +29,12 @@ public class Screen extends Bitmap {
 		this.yOffset = y;
 	}
 
+	public void drawWithWash(Bitmap bitmap, int x, int y, int col, int data, boolean b) {
+		if (b) {
+			super.drawWithWash(bitmap, x + xOffset, y + yOffset, col, data);
+		} else {
+			super.drawWithWash(bitmap, x, y, col, data);
+		}
+
+	}
 }
