@@ -174,12 +174,14 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.fillRect(0, 0, getWidth(), getHeight());
 
+		screen.clear(0xFF000000);
+		
 		if (menuStack.getMenuSize() > 0) {
 			menuStack.render(screen);
 		} else {
 			for (int y = 0; y < GAME_HEIGHT / 16 + 1; y++) {
 				for (int x = 0; x < GAME_WIDTH / 16 + 1; x++) {
-					int d = data[x][y+232];
+					int d = data[x][y];
 					int t = tiles[x][y];
 					// screen.draw(Art.TILES[0][0], x * 16 + 16, y * 16 + 16, fi
 					// %
@@ -189,7 +191,6 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 
-		Font.draw("abcdefghijklmnopqrstuvwxyz", 8, 128, 0xFF000000, screen);
 		
 		int ww = GAME_WIDTH * SCALE;
 		int hh = GAME_HEIGHT * SCALE;
