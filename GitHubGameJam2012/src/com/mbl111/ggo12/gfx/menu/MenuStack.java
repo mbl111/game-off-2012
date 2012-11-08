@@ -32,7 +32,7 @@ public class MenuStack {
 		int i = menus.size() - 1;
 		Menu m = menus.get(i);
 		m.tick();
-		while (!m.isFullScreen()) {
+		while (!m.isFullScreen() && i >= 0) {
 			i--;
 			m = menus.get(i);
 			m.tick();
@@ -43,11 +43,15 @@ public class MenuStack {
 		int i = menus.size() - 1;
 		Menu m = menus.get(i);
 		m.render(screen);
-		while (!m.isFullScreen()) {
+		while (!m.isFullScreen() & i >= 0) {
 			i--;
 			m = menus.get(i);
 			m.render(screen);
 		}
+	}
+
+	public int getMenuSize() {
+		return menus.size();
 	}
 
 }

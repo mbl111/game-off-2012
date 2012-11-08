@@ -4,15 +4,16 @@ import com.mbl111.ggo12.Game;
 import com.mbl111.ggo12.gfx.Screen;
 
 public class Menu {
-	
-	public Game game;
 
-	public void init(Game game){
+	public Game game;
+	public int aliveTime = 0;
+
+	public void init(Game game) {
 		this.game = game;
 	}
-	
-	public void tick() {
 
+	public void tick() {
+		aliveTime++;
 	}
 
 	public boolean isFullScreen() {
@@ -20,7 +21,7 @@ public class Menu {
 	}
 
 	public void render(Screen screen) {
-		
+
 	}
 
 }

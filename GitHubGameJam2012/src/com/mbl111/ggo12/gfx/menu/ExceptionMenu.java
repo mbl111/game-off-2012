@@ -11,12 +11,20 @@ public class ExceptionMenu extends Menu {
 		stack = e.getStackTrace();
 	}
 
+	public void tick() {
+		super.tick();
+		System.out.println(aliveTime);
+		if (aliveTime >= 60 * 10) game.requestClose();
+	}
+
+	public boolean isFullScreen() {
+		return true;
+	}
+
 	public void render(Screen screen) {
 		screen.fill(0xFF000000, 0, 0, screen.w, screen.h, 0);
 		for (int i = 0; i < stack.length; i++) {
-			Font.draw(stack[i].toString(), 8, i * 8, 0xFFFFFFFF, screen);
+			Font.draw(stack[i].getFileName() + stack[i].getLineNumber(), 8, i * 8, 0xFFFFFFFF, screen);
 		}
-
 	}
-
 }

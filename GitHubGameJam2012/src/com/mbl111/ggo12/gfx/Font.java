@@ -4,7 +4,9 @@ public class Font {
 
 	public static String characters = //
 	"ABCDEFGHIJKLMNOP" + //
-			"QRSTUVWXYZ";
+			"QRSTUVWXYZ()    " + //
+			"                " + //
+			"0123456789      ";
 
 	public static void draw(String msg, int x, int y, int color, int data, Screen screen) {
 		int length = msg.length();
@@ -12,7 +14,7 @@ public class Font {
 		for (int i = 0; i < length; i++) {
 			String c = msg.charAt(i) + "";
 			int icon = characters.indexOf(c);
-			screen.drawWithWash(Art.FONT[icon / 16][icon & 16], (i * 16) + x, y, color, data, false);
+			if (icon >= 0) screen.drawWithWash(Art.FONT[icon % 16][icon / 16], (i * 8) + x, y, color, data, false);
 		}
 	}
 
@@ -26,7 +28,7 @@ public class Font {
 		for (int i = 0; i < length; i++) {
 			String c = msg.charAt(i) + "";
 			int icon = characters.indexOf(c);
-			screen.drawWithWash(Art.FONT[icon / 16][icon & 16], (i * 16) + x, y, color, data, true);
+			if (icon >= 0) screen.drawWithWash(Art.FONT[icon % 16][icon / 16], (i * 8) + x, y, color, data, true);
 		}
 	}
 

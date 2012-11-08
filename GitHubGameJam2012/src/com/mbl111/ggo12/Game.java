@@ -9,6 +9,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
 import com.mbl111.ggo12.gfx.Art;
+import com.mbl111.ggo12.gfx.Font;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.gfx.menu.ExceptionMenu;
 import com.mbl111.ggo12.gfx.menu.Menu;
@@ -139,13 +140,8 @@ public class Game extends Canvas implements Runnable {
 					ticks = 0;
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 				setMenu(new ExceptionMenu(e));
-				requestClose();
-				try {
-					Thread.sleep(60 * 5);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
 			}
 		}
 
@@ -161,7 +157,11 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() {
+		if (menuStack.getMenuSize() > 0) {
+			menuStack.tick();
+		} else {
 
+		}
 	}
 
 	private void render() {
@@ -174,16 +174,23 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.fillRect(0, 0, getWidth(), getHeight());
 
-		for (int y = 0; y < GAME_HEIGHT / 16 + 1; y++) {
-			for (int x = 0; x < GAME_WIDTH / 16 + 1; x++) {
-				int d = data[x][y];
-				int t = tiles[x][y];
-				// screen.draw(Art.TILES[0][0], x * 16 + 16, y * 16 + 16, fi %
-				// 4);
-				screen.draw(Art.TILES[t % 16][t / 16], x * 16, y * 16, d);
+		if (menuStack.getMenuSize() > 0) {
+			menuStack.render(screen);
+		} else {
+			for (int y = 0; y < GAME_HEIGHT / 16 + 1; y++) {
+				for (int x = 0; x < GAME_WIDTH / 16 + 1; x++) {
+					int d = data[x][y+232];
+					int t = tiles[x][y];
+					// screen.draw(Art.TILES[0][0], x * 16 + 16, y * 16 + 16, fi
+					// %
+					// 4);
+					screen.draw(Art.TILES[t % 16][t / 16], x * 16, y * 16, d);
+				}
 			}
 		}
 
+		Font.draw("abcdefghijklmnopqrstuvwxyz", 8, 128, 0xFF000000, screen);
+		
 		int ww = GAME_WIDTH * SCALE;
 		int hh = GAME_HEIGHT * SCALE;
 		int xo = (getWidth() - ww) / 2;
