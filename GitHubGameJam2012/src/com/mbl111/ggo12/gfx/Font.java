@@ -4,9 +4,12 @@ public class Font {
 
 	public static String characters = //
 	"ABCDEFGHIJKLMNOP" + //
-			"QRSTUVWXYZ()    " + //
+			"QRSTUVWXYZ:\"<>{}6" + //
+			"!@#$%^&*()_+?|  " + //
 			"                " + //
-			"0123456789      ";
+			"abcdefghijklmnop" + //
+			"qrstuvwxyz;',.[]" + //
+			"1234567890-=/\\";
 
 	public static void draw(String msg, int x, int y, int color, int data, Screen screen) {
 		int length = msg.length();
