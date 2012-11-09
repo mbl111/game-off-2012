@@ -1,5 +1,6 @@
 package com.mbl111.ggo12.entity;
 
+import com.mbl111.ggo12.Util.Vector2i;
 import com.mbl111.ggo12.gfx.Art;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.level.Level;
@@ -11,6 +12,8 @@ public class Entity {
 	public int textureIndex;
 	private boolean removed = false;
 	private Level level;
+	private Vector2i radius = new Vector2i(10, 10);
+	private Vector2i pos = new Vector2i(0, 0);
 
 	private void init(Level level) {
 		this.level = level;
