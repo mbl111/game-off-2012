@@ -16,9 +16,9 @@ public class Font {
 		for (int i = 0; i < length; i++) {
 			String c = msg.charAt(i) + "";
 			int icon = characters.indexOf(c);
-			if (icon >= 0){
+			if (icon >= 0) {
 				screen.drawWithWash(Art.FONT[icon % 16][icon / 16], (i * 8) + x, y, color, data, false);
-			}else{
+			} else {
 				screen.drawWithWash(Art.FONT[0][7], (i * 8) + x, y, color, data, false);
 			}
 		}
