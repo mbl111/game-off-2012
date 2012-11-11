@@ -14,6 +14,7 @@ import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.gfx.menu.ExceptionMenu;
 import com.mbl111.ggo12.gfx.menu.Menu;
 import com.mbl111.ggo12.gfx.menu.MenuStack;
+import com.mbl111.ggo12.level.Level;
 
 public class Game extends Canvas implements Runnable {
 
@@ -30,9 +31,8 @@ public class Game extends Canvas implements Runnable {
 	private int ups;
 	private int gameTicks;
 	private Screen screen;
-	private int[][] tiles;
-	private int[][] data;
 	private MenuStack menuStack = new MenuStack(this);
+	private Level level;
 
 	public Game() {
 		Dimension d = new Dimension(GAME_WIDTH * SCALE, GAME_HEIGHT * SCALE);
@@ -70,26 +70,8 @@ public class Game extends Canvas implements Runnable {
 	public void init() {
 		screen = new Screen(GAME_WIDTH, GAME_HEIGHT);
 
-		data = new int[GAME_WIDTH / 16 + 1][GAME_HEIGHT / 16 + 1];
-		tiles = new int[GAME_WIDTH / 16 + 1][GAME_HEIGHT / 16 + 1];
-
-		for (int y = 0; y < GAME_HEIGHT / 16 + 1; y++) {
-			for (int x = 0; x < GAME_WIDTH / 16 + 1; x++) {
-				data[x][y] = 0;
-				tiles[x][y] = 3;
-			}
-		}
-
-		tiles[0][0] = 0;
-		tiles[0][1] = 0;
-		tiles[0][2] = 0;
-		tiles[0][3] = 0;
-		tiles[0][4] = 0 + 1 * 16;
-		data[0][4] = 1;
-		tiles[1][4] = 1;
-		tiles[2][4] = 1;
-		tiles[3][4] = 1;
-
+		level = new Level(128,128);
+		
 	}
 
 	public void run() {
@@ -175,23 +157,13 @@ public class Game extends Canvas implements Runnable {
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		screen.clear(0xFF333333);
-		
 		if (menuStack.getMenuSize() > 0) {
 			menuStack.render(screen);
 		} else {
-			for (int y = 0; y < GAME_HEIGHT / 16 + 1; y++) {
-				for (int x = 0; x < GAME_WIDTH / 16 + 1; x++) {
-					int d = data[x][y];
-					int t = tiles[x][y];
-					// screen.draw(Art.TILES[0][0], x * 16 + 16, y * 16 + 16, fi
-					// %
-					// 4);
-					screen.draw(Art.TILES[t % 16][t / 16], x * 16, y * 16, d);
-				}
-			}
+			level.render(screen,0,0);
 		}
 
-		
+		Font.draw("FPS: " + this.fps, 2, 2, 0xFFFFFF00, screen);
 		int ww = GAME_WIDTH * SCALE;
 		int hh = GAME_HEIGHT * SCALE;
 		int xo = (getWidth() - ww) / 2;

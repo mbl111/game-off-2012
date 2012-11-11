@@ -21,7 +21,7 @@ public class Screen extends Bitmap {
 	}
 
 	public void draw(Bitmap bitmap, int x, int y, int data) {
-		super.draw(bitmap, x + xOffset, y + yOffset, data);
+		super.draw(bitmap, x - xOffset, y - yOffset, data);
 	}
 
 	public void setOffset(int x, int y) {
@@ -31,7 +31,7 @@ public class Screen extends Bitmap {
 
 	public void drawWithWash(Bitmap bitmap, int x, int y, int col, int data, boolean b) {
 		if (b) {
-			super.drawWithWash(bitmap, x + xOffset, y + yOffset, col, data);
+			super.drawWithWash(bitmap, x - xOffset, y - yOffset, col, data);
 		} else {
 			super.drawWithWash(bitmap, x, y, col, data);
 		}
