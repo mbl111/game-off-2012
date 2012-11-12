@@ -28,11 +28,16 @@ public class Entity {
 	}
 
 	public void render(Screen screen) {
-		screen.draw(Art.TILES[textureIndex % 16][textureIndex / 16], x - Tile.WIDTH / 2, y - Tile.HEIGHT, 0);
+		screen.draw(Art.TILES[textureIndex % 16][textureIndex / 16], x
+				- Tile.WIDTH / 2, y - Tile.HEIGHT, 0);
 	}
 
 	public void tick() {
 
+	}
+
+	public boolean isRemoved() {
+		return removed;
 	}
 
 }

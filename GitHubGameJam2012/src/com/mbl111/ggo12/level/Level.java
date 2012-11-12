@@ -1,5 +1,9 @@
 package com.mbl111.ggo12.level;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.mbl111.ggo12.entity.Entity;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.level.tile.Tile;
 
@@ -7,6 +11,7 @@ public class Level {
 
 	public byte[] data, tiles;
 	public int w, h;
+	public List<Entity> entities = new ArrayList<Entity>();
 
 	public Level(int w, int h) {
 		data = new byte[w * h];
@@ -19,7 +24,13 @@ public class Level {
 	}
 
 	public void tick() {
-
+		for (Entity e : entities){
+			if (e.isRemoved()){
+				entities.remove(e);
+			}else{
+				e.tick();
+			}
+		}
 	}
 
 	public void render(Screen screen, int xScroll, int yScroll) {
