@@ -1,6 +1,5 @@
 package com.mbl111.ggo12.level.tile;
 
-import javax.management.RuntimeErrorException;
 
 import com.mbl111.ggo12.gfx.Art;
 import com.mbl111.ggo12.gfx.Screen;
