@@ -8,7 +8,6 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
-import com.mbl111.ggo12.gfx.Art;
 import com.mbl111.ggo12.gfx.Font;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.gfx.menu.ExceptionMenu;
@@ -18,6 +17,10 @@ import com.mbl111.ggo12.level.Level;
 
 public class Game extends Canvas implements Runnable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final int GAME_WIDTH = 220;
 	public static final int GAME_HEIGHT = GAME_WIDTH * 3 / 4;
 	public static final int SCALE = 3;
