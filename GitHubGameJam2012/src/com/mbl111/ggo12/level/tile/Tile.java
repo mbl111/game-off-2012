@@ -27,7 +27,7 @@ public class Tile {
 	}
 
 	public void render(Screen screen, Level level, int x, int y) {
-		screen.draw(Art.TILES[2][0], x, y, 0);
+		screen.draw(Art.TILES[2][0], x, y, level.getData(x >> 4, y >> 4));
 	}
 
 	public static Tile WALL = new Tile(0);

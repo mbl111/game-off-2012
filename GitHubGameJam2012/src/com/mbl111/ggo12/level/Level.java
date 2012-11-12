@@ -50,6 +50,7 @@ public class Level {
 	}
 
 	public byte getData(int x, int y) {
+		if (x < 0 | x >= w | y < 0 | y >= h) return 0;
 		return data[x + y * w];
 	}
 
