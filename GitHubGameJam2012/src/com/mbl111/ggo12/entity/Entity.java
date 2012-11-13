@@ -15,7 +15,7 @@ public class Entity {
 	private Vector2i radius = new Vector2i(10, 10);
 	private Vector2i pos = new Vector2i(0, 0);
 
-	private void init(Level level) {
+	public void init(Level level) {
 		this.level = level;
 		init();
 	}
