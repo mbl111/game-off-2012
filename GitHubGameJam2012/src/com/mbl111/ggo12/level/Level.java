@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mbl111.ggo12.Util.SyncRandom;
 import com.mbl111.ggo12.entity.Entity;
+import com.mbl111.ggo12.entity.Player;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.level.tile.Tile;
 
@@ -15,6 +16,7 @@ public class Level {
 
 	public List<Entity>[] entitiesInTiles;
 	public List<Entity> entities = new ArrayList<Entity>();
+	private Player player;
 
 	public Level(int w, int h) {
 		data = new byte[w * h];
@@ -29,6 +31,57 @@ public class Level {
 
 	public void tick() {
 
+		for (int i = 0; i < entities.size(); i++) {
+			Entity entity = entities.get(i);
+			int oxt = entity.x >> 4;
+			int oyt = entity.y >> 4;
+
+			entity.tick();
+			if (entity.isRemoved()) {
+				entities.remove(i--);
+				removeEntity(oxt, oyt, entity);
+			} else {
+				int xt = entity.x >> 4;
+				int yt = entity.y >> 4;
+				removeEntity(oxt, oyt, entity);
+				insertEntity(xt, yt, entity);
+			}
+
+		}
+
+	}
+
+	public void add(Entity entity) {
+		if (entity instanceof Player) {
+			player = (Player) entity;
+		}
+		entities.add(entity);
+		entity.init(this);
+		insertEntity(entity.x >> 4, entity.y >> 4, entity);
+
+	}
+
+	public int getEntityCount() {
+		return entities.size();
+	}
+
+	public void remove(Entity entity) {
+		if (entity instanceof Player) {
+			player = null;
+		}
+		entities.remove(entity);
+		removeEntity(entity.x >> 4, entity.y >> 4, entity);
+
+	}
+
+	private void insertEntity(int xt, int yt, Entity entity) {
+		if (xt < 0 | xt >= w | yt < 0 | yt >= h) return;
+		entitiesInTiles[xt + yt * w].add(entity);
+	}
+
+	private void removeEntity(int xt, int yt, Entity entity) {
+		if (xt < 0 | xt >= w | yt < 0 | yt >= h) return;
+		entitiesInTiles[xt + yt * w].remove(entity);
 	}
 
 	public void render(Screen screen, int xScroll, int yScroll) {
