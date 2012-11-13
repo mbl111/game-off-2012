@@ -13,6 +13,8 @@ import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.gfx.menu.ExceptionMenu;
 import com.mbl111.ggo12.gfx.menu.Menu;
 import com.mbl111.ggo12.gfx.menu.MenuStack;
+import com.mbl111.ggo12.input.Input;
+import com.mbl111.ggo12.input.InputHandler;
 import com.mbl111.ggo12.level.Level;
 
 public class Game extends Canvas implements Runnable {
@@ -32,6 +34,8 @@ public class Game extends Canvas implements Runnable {
 	private boolean limitFps = false;
 	private int fps;
 	private int ups;
+	private InputHandler inputHandle;
+	private Input input;
 	private int gameTicks;
 	private Screen screen;
 	private MenuStack menuStack = new MenuStack(this);
@@ -72,9 +76,9 @@ public class Game extends Canvas implements Runnable {
 
 	public void init() {
 		screen = new Screen(GAME_WIDTH, GAME_HEIGHT);
-
-		level = new Level(128,128);
-		
+		level = new Level(128, 128);
+		inputHandle = new InputHandler(this);
+		input = new Input();
 	}
 
 	public void run() {
@@ -141,7 +145,12 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
+	public Input getInput(){
+		return input;
+	}
+	
 	private void tick() {
+		input = inputHandle.updateMouseStatus(SCALE);
 		if (menuStack.getMenuSize() > 0) {
 			menuStack.tick();
 		} else {
@@ -163,7 +172,7 @@ public class Game extends Canvas implements Runnable {
 		if (menuStack.getMenuSize() > 0) {
 			menuStack.render(screen);
 		} else {
-			level.render(screen,0 - gameTicks/3,0 - gameTicks/3);
+			level.render(screen, 0 - gameTicks / 3, 0 - gameTicks / 3);
 		}
 
 		Font.draw("FPS: " + this.fps, 2, 2, 0xFFFFFF00, screen);
