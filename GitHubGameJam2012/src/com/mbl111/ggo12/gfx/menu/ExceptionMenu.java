@@ -23,8 +23,7 @@ public class ExceptionMenu extends Menu {
 
 	public void render(Screen screen) {
 		screen.fill(0xFF000000, 0, 0, screen.w, screen.h, 0);
-		for (int i = 0; i < stack.length; i++) {
-			Font.draw(stack[i].getFileName() + stack[i].getLineNumber(), 8, i * 8, 0xFFFFFFFF, screen);
-		}
+		String error = "The Game Broke!!";
+		Font.draw(error, (screen.w - error.length())/2, (screen.h/2) - 4, 0xFFFFFFFF, screen);
 	}
 }

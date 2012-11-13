@@ -47,7 +47,7 @@ public class Level {
 	}
 
 	public Tile getTile(int x, int y) {
-		if (x < 0 | x >= w | y < 0 | y >= h) return Tile.WALL;
+		if (x < 0 | x >= w | y < 0 | y >= h) return Tile.ROCK;
 		return Tile.byid(tiles[x + y * w]);
 	}
 

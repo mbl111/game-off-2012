@@ -163,7 +163,7 @@ public class Game extends Canvas implements Runnable {
 		if (menuStack.getMenuSize() > 0) {
 			menuStack.render(screen);
 		} else {
-			level.render(screen,0,0);
+			level.render(screen,0 - gameTicks/3,0 - gameTicks/3);
 		}
 
 		Font.draw("FPS: " + this.fps, 2, 2, 0xFFFFFF00, screen);
