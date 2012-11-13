@@ -32,7 +32,7 @@ public class Entity {
 	}
 
 	public void tick() {
-
+		x++;
 	}
 
 	public boolean isRemoved() {

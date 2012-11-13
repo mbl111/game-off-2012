@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+import com.mbl111.ggo12.entity.Entity;
 import com.mbl111.ggo12.gfx.Font;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.gfx.menu.ExceptionMenu;
@@ -79,6 +80,10 @@ public class Game extends Canvas implements Runnable {
 		level = new Level(128, 128);
 		inputHandle = new InputHandler(this);
 		input = new Input();
+		Entity e = new Entity();
+		e.x = 15;
+		e.y = 15;
+		level.add(e);
 	}
 
 	public void run() {
@@ -154,7 +159,7 @@ public class Game extends Canvas implements Runnable {
 		if (menuStack.getMenuSize() > 0) {
 			menuStack.tick();
 		} else {
-
+			level.tick();
 		}
 	}
 
@@ -172,7 +177,8 @@ public class Game extends Canvas implements Runnable {
 		if (menuStack.getMenuSize() > 0) {
 			menuStack.render(screen);
 		} else {
-			level.render(screen, 0 - gameTicks / 3, 0 - gameTicks / 3);
+			level.renderTile(screen, 0 - gameTicks / 3, 0 - gameTicks / 3);
+			level.renderEntity(screen, 0 - gameTicks / 3, 0 - gameTicks / 3);
 		}
 
 		Font.draw("FPS: " + this.fps, 2, 2, 0xFFFFFF00, screen);

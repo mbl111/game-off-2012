@@ -1,6 +1,8 @@
 package com.mbl111.ggo12.level;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.mbl111.ggo12.Util.SyncRandom;
@@ -18,14 +20,28 @@ public class Level {
 	public List<Entity> entities = new ArrayList<Entity>();
 	private Player player;
 
+	private Comparator<Entity> spriteSorter = new Comparator<Entity>() {
+
+		public int compare(Entity e1, Entity e2) {
+			if (e2.y > e1.y) return -1;
+			if (e2.y < e1.y) return +1;
+			return 0;
+		}
+	};
+	
 	public Level(int w, int h) {
 		data = new byte[w * h];
 		tiles = new byte[w * h];
+		entitiesInTiles = new ArrayList[w * h];
 		this.w = w;
 		this.h = h;
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i] = 0;
 			data[i] = (byte) SyncRandom.nextInt(4);
+		}
+
+		for (int i = 0; i < w * h; i++) {
+			entitiesInTiles[i] = new ArrayList<Entity>();
 		}
 	}
 
@@ -84,7 +100,7 @@ public class Level {
 		entitiesInTiles[xt + yt * w].remove(entity);
 	}
 
-	public void render(Screen screen, int xScroll, int yScroll) {
+	public void renderTile(Screen screen, int xScroll, int yScroll) {
 		int w = (screen.w + 15) >> 4;
 		int h = (screen.h + 15) >> 4;
 		int xo = xScroll >> 4;
@@ -97,6 +113,37 @@ public class Level {
 			}
 		}
 		screen.setOffset(0, 0);
+	}
+	
+	private List<Entity> rowSprites = new ArrayList<Entity>();
+	
+	public void renderEntity(Screen screen, int xScroll, int yScroll) {
+		int w = (screen.w + 15) >> 4;
+		int h = (screen.h + 15) >> 4;
+		int xo = xScroll >> 4;
+		int yo = yScroll >> 4;
+
+		screen.setOffset(xScroll, yScroll);
+		for (int y = yo; y <= h + yo; y++) {
+			for (int x = xo; x <= w + xo; x++) {
+				if (x < 0 || y < 0 || x >= this.w || y >= this.h) continue;
+				rowSprites.addAll(entitiesInTiles[x + y * this.w]);
+			}
+			if (rowSprites.size() > 0) {
+				sortAndRender(screen, entities);
+			}
+			rowSprites.clear();
+
+		}
+
+		screen.setOffset(0, 0);
+	}
+	
+	private void sortAndRender(Screen screen, List<Entity> list) {
+		Collections.sort(list, spriteSorter);
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).render(screen);
+		}
 	}
 
 	public Tile getTile(int x, int y) {
