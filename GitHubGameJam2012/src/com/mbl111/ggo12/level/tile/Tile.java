@@ -28,6 +28,10 @@ public class Tile {
 
 	public void render(Screen screen, Level level, int x, int y) {
 	}
+	
+	public void nextToUpdate(Level level, int tx, int ty, int nx, int ny){
+		
+	}
 
 	public static Tile GRASS = new GrassTile(0);
 	public static final Tile ROCK = new RockTile(1, GRASS);

@@ -28,7 +28,7 @@ public class Level {
 			return 0;
 		}
 	};
-	
+
 	public Level(int w, int h) {
 		data = new byte[w * h];
 		tiles = new byte[w * h];
@@ -46,7 +46,6 @@ public class Level {
 	}
 
 	public void tick() {
-
 		for (int i = 0; i < entities.size(); i++) {
 			Entity entity = entities.get(i);
 			int oxt = entity.x >> 4;
@@ -65,6 +64,16 @@ public class Level {
 
 		}
 
+	}
+
+	public void setTile(int xt, int yt, int id, int data) {
+		if (xt < 0 | xt >= w | yt < 0 | yt >= h) return;
+		tiles[xt + yt * w] = (byte) id;
+		this.data[xt + yt * w] = (byte) data;
+		Tile.byid(tiles[(xt - 1) + (yt) * w]).nextToUpdate(this, xt - 1, yt, xt, yt);
+		Tile.byid(tiles[(xt + 1) + (yt) * w]).nextToUpdate(this, xt + 1, yt, xt, yt);
+		Tile.byid(tiles[(xt) + (yt - 1) * w]).nextToUpdate(this, xt, yt - 1, xt, yt);
+		Tile.byid(tiles[(xt) + (yt + 1) * w]).nextToUpdate(this, xt, yt + 1, xt, yt);
 	}
 
 	public void add(Entity entity) {
@@ -114,9 +123,9 @@ public class Level {
 		}
 		screen.setOffset(0, 0);
 	}
-	
+
 	private List<Entity> rowSprites = new ArrayList<Entity>();
-	
+
 	public void renderEntity(Screen screen, int xScroll, int yScroll) {
 		int w = (screen.w + 15) >> 4;
 		int h = (screen.h + 15) >> 4;
@@ -138,7 +147,7 @@ public class Level {
 
 		screen.setOffset(0, 0);
 	}
-	
+
 	private void sortAndRender(Screen screen, List<Entity> list) {
 		Collections.sort(list, spriteSorter);
 		for (int i = 0; i < list.size(); i++) {
