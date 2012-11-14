@@ -4,18 +4,18 @@ import com.mbl111.ggo12.gfx.Art;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.level.Level;
 
-public class RockTile extends Tile{
+public class RockTile extends Tile {
 
-	private Tile underTile;
-	
-	public RockTile(int id, Tile floor) {
-		super(id);
-		this.underTile = floor;
+	private int underTileImage;
+
+	public RockTile(Tile floor) {
+		this.underTileImage = floor.img;
+		img = 2 + 1 * 16;
 	}
 
-	public void render(Screen screen, Level level, int x, int y) {
-		underTile.render(screen, level, x, y);
-		screen.draw(Art.TILES[2][1], x, y, 0);
+	public void render(Screen screen) {
+		screen.draw(Art.TILES[underTileImage % 16][underTileImage / 16], x * WIDTH, y * HEIGHT, 0);
+		super.render(screen);
 	}
-	
+
 }

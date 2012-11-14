@@ -6,14 +6,17 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.mbl111.ggo12.Util.SyncRandom;
+import com.mbl111.ggo12.Util.Vector2i;
 import com.mbl111.ggo12.entity.Entity;
 import com.mbl111.ggo12.entity.Player;
 import com.mbl111.ggo12.gfx.Screen;
+import com.mbl111.ggo12.level.tile.GrassTile;
+import com.mbl111.ggo12.level.tile.RockTile;
 import com.mbl111.ggo12.level.tile.Tile;
 
 public class Level {
 
-	public byte[] data, tiles;
+	public Tile[] tiles;
 	public int w, h;
 
 	public List<Entity>[] entitiesInTiles;
@@ -30,14 +33,15 @@ public class Level {
 	};
 
 	public Level(int w, int h) {
-		data = new byte[w * h];
-		tiles = new byte[w * h];
+		tiles = new Tile[w * h];
 		entitiesInTiles = new ArrayList[w * h];
 		this.w = w;
 		this.h = h;
-		for (int i = 0; i < tiles.length; i++) {
-			tiles[i] = 0;
-			data[i] = (byte) SyncRandom.nextInt(4);
+		for (int x = 0; x < w; x++) {
+			for (int y = 0; y < h; y++) {
+				Tile tile = new GrassTile();
+				setTile(x, y, tile, false);
+			}
 		}
 
 		for (int i = 0; i < w * h; i++) {
@@ -66,14 +70,16 @@ public class Level {
 
 	}
 
-	public void setTile(int xt, int yt, int id, int data) {
+	public void setTile(int xt, int yt, Tile tile, boolean physics) {
 		if (xt < 0 | xt >= w | yt < 0 | yt >= h) return;
-		tiles[xt + yt * w] = (byte) id;
-		this.data[xt + yt * w] = (byte) data;
-		Tile.byid(tiles[(xt - 1) + (yt) * w]).nextToUpdate(this, xt - 1, yt, xt, yt);
-		Tile.byid(tiles[(xt + 1) + (yt) * w]).nextToUpdate(this, xt + 1, yt, xt, yt);
-		Tile.byid(tiles[(xt) + (yt - 1) * w]).nextToUpdate(this, xt, yt - 1, xt, yt);
-		Tile.byid(tiles[(xt) + (yt + 1) * w]).nextToUpdate(this, xt, yt + 1, xt, yt);
+		tiles[xt + yt * w] = tile;
+		tile.init(this, xt, yt);
+		if (physics) {
+			getTile(xt - 1, yt).neighborUpdate(tile, xt - 1, yt);
+			getTile(xt + 1, yt).neighborUpdate(tile, xt + 1, yt);
+			getTile(xt, yt - 1).neighborUpdate(tile, xt, yt - 1);
+			getTile(xt, yt + 1).neighborUpdate(tile, xt, yt + 1);
+		}
 	}
 
 	public void add(Entity entity) {
@@ -118,7 +124,7 @@ public class Level {
 		screen.setOffset(xScroll, yScroll);
 		for (int y = yo; y <= h + yo; y++) {
 			for (int x = xo; x <= w + xo; x++) {
-				getTile(x, y).render(screen, this, x << 4, y << 4);
+				getTile(x, y).render(screen);
 			}
 		}
 		screen.setOffset(0, 0);
@@ -156,13 +162,18 @@ public class Level {
 	}
 
 	public Tile getTile(int x, int y) {
-		if (x < 0 | x >= w | y < 0 | y >= h) return Tile.ROCK;
-		return Tile.byid(tiles[x + y * w]);
+		if (x < 0 || y < 0 || x >= w || y >= h){
+			Tile tile = new RockTile(new GrassTile());
+			tile.init(this, x, y);
+			return tile;
+		}
+		return tiles[x + y * w];
 	}
 
-	public byte getData(int x, int y) {
-		if (x < 0 | x >= w | y < 0 | y >= h) return 0;
-		return data[x + y * w];
+	public Tile getTile(Vector2i pos) {
+		int x = (int) pos.x / Tile.WIDTH;
+		int y = (int) pos.y / Tile.HEIGHT;
+		return getTile(x, y);
 	}
 
 }
