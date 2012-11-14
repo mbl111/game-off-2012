@@ -9,6 +9,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
 import com.mbl111.ggo12.entity.Entity;
+import com.mbl111.ggo12.entity.Player;
 import com.mbl111.ggo12.gfx.Font;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.gfx.menu.ExceptionMenu;
@@ -17,6 +18,7 @@ import com.mbl111.ggo12.gfx.menu.MenuStack;
 import com.mbl111.ggo12.input.Input;
 import com.mbl111.ggo12.input.InputHandler;
 import com.mbl111.ggo12.level.Level;
+import com.mbl111.ggo12.level.tile.Tile;
 
 public class Game extends Canvas implements Runnable {
 
@@ -41,6 +43,7 @@ public class Game extends Canvas implements Runnable {
 	private Screen screen;
 	private MenuStack menuStack = new MenuStack(this);
 	private Level level;
+	private Player player;
 
 	public Game() {
 		Dimension d = new Dimension(GAME_WIDTH * SCALE, GAME_HEIGHT * SCALE);
@@ -80,10 +83,10 @@ public class Game extends Canvas implements Runnable {
 		level = new Level(128, 128);
 		inputHandle = new InputHandler(this);
 		input = new Input();
-		Entity e = new Entity();
-		e.x = 15;
-		e.y = 15;
-		level.add(e);
+		player = new Player(this);
+		player.x = 0;
+		player.y = 0;
+		level.add(player);
 	}
 
 	public void run() {
@@ -150,10 +153,10 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
-	public Input getInput(){
+	public Input getInput() {
 		return input;
 	}
-	
+
 	private void tick() {
 		input = inputHandle.updateMouseStatus(SCALE);
 		if (menuStack.getMenuSize() > 0) {
@@ -173,12 +176,20 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.fillRect(0, 0, getWidth(), getHeight());
 
+		int xScroll = player.x - screen.w / 2 + 8;
+		int yScroll = player.y - screen.h / 2 + 8;
+
+		if (xScroll < -32) xScroll = -32;
+		if (yScroll < -32) yScroll = -32;
+		if (xScroll > level.w * 16 - screen.w + 32) xScroll = level.w * 16 - screen.w + 32;
+		if (yScroll > level.h * 16 - screen.h + 32) yScroll = level.h * 16 - screen.h + 32;
+		
 		screen.clear(0xFF333333);
 		if (menuStack.getMenuSize() > 0) {
 			menuStack.render(screen);
 		} else {
-			level.renderTile(screen, 0 - gameTicks / 3, 0 - gameTicks / 3);
-			level.renderEntity(screen, 0 - gameTicks / 3, 0 - gameTicks / 3);
+			level.renderTile(screen, xScroll, yScroll);
+			level.renderEntity(screen, xScroll, yScroll);
 		}
 
 		Font.draw("FPS: " + this.fps, 2, 2, 0xFFFFFF00, screen);
