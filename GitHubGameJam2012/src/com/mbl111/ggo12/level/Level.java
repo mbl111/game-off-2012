@@ -175,5 +175,24 @@ public class Level {
 		int y = (int) pos.y / Tile.HEIGHT;
 		return getTile(x, y);
 	}
+	
+	public List<Entity> getEntities(int x0, int y0, int x1, int y1) {
+		List<Entity> result = new ArrayList<Entity>();
+		int xt0 = x0 >> 4;
+		int xt1 = x1 >> 4;
+		int yt0 = y0 >> 4;
+		int yt1 = y1 >> 4;
+		for (int y = yt0; y <= yt1; y++) {
+			for (int x = xt0; x <= xt1; x++) {
+				if (x < 0 || y < 0 || x >= w || y >= h) continue;
+				List<Entity> entities = entitiesInTiles[x + y * this.w];
+				for (int i = 0; i < entities.size(); i++) {
+					Entity e = entities.get(i);
+					if (e.intersects(x0, y0, x1, y1)) result.add(e);
+				}
+			}
+		}
+		return result;
+	}
 
 }

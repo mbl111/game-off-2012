@@ -1,6 +1,7 @@
 package com.mbl111.ggo12.entity;
 
 import com.mbl111.ggo12.Game;
+import com.mbl111.ggo12.Util.Vector2i;
 import com.mbl111.ggo12.input.Input;
 
 public class Player extends Mob {
@@ -13,19 +14,21 @@ public class Player extends Mob {
 
 	public void tick() {
 		Input input = game.getInput();
+		Vector2i move = new Vector2i(0, 0);
 		int speed = 1;
 		if (input.down.down) {
-			y += speed;
+			move.y += speed;
 		}
 		if (input.up.down) {
-			y -= speed;
+			move.y -= speed;
 		}
 		if (input.right.down) {
-			x += speed;
+			move.x += speed;
 		}
 		if (input.left.down) {
-			x -= speed;
+			move.x -= speed;
 		}
+		move(move);
 	}
 
 }

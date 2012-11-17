@@ -1,5 +1,6 @@
 package com.mbl111.ggo12.level.tile;
 
+import com.mbl111.ggo12.entity.Entity;
 import com.mbl111.ggo12.gfx.Art;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.level.Level;
@@ -26,6 +27,17 @@ public class Tile {
 		this.x = xt;
 		this.y = yt;
 		this.level = level;
+	}
+
+	public void steppedOn(Entity entity) {
+
+	}
+
+	public boolean mayPass(Entity entity) {
+		return true;
+	}
+
+	public void bumpInto(Entity entity) {
 	}
 
 }
