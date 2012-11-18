@@ -11,14 +11,16 @@ import com.mbl111.ggo12.level.tile.Tile;
 
 public class Entity {
 
-	public int x, y;
+	public int x;
+	public int y;
 	public int textureIndex;
 	private boolean removed = false;
 	private Level level;
-	private Vector2i radius = new Vector2i(8, 8);
-	private Vector2i pos = new Vector2i(0, 0);
+	public Vector2i radius = new Vector2i(8, 8);
 
 	public void init(Level level) {
+		x = 8;
+		y = 8;
 		this.level = level;
 		init();
 	}

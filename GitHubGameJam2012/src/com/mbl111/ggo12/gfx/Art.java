@@ -9,8 +9,9 @@ import com.mbl111.ggo12.Game;
 
 public class Art {
 
-	public static Bitmap[][] TILES = load(16, 16, "/tiles.png");
-	public static Bitmap[][] FONT = load(8, 8, "/font.png");
+	public static final Bitmap[][] PLAYERS = load(16, 16, "/entity/player.png");
+	public static final Bitmap[][] TILES = load(16, 16, "/tiles.png");
+	public static final Bitmap[][] FONT = load(8, 8, "/font.png");
 
 	public static Bitmap[][] load(int sx, int sy, int w, int h, String file) {
 		try {
@@ -24,8 +25,7 @@ public class Art {
 			for (int x = 0; x < xTiles; x++) {
 				for (int y = 0; y < yTiles; y++) {
 					result[x][y] = new Bitmap(w, h);
-					bi.getRGB(sx + x * w, sy + y * h, w, h,
-							result[x][y].pixels, 0, w);
+					bi.getRGB(sx + x * w, sy + y * h, w, h, result[x][y].pixels, 0, w);
 				}
 			}
 
