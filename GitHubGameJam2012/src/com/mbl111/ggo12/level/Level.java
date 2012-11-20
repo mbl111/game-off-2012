@@ -8,6 +8,7 @@ import java.util.List;
 import com.mbl111.ggo12.Util.SyncRandom;
 import com.mbl111.ggo12.Util.Vector2i;
 import com.mbl111.ggo12.entity.Entity;
+import com.mbl111.ggo12.entity.EntityBlock;
 import com.mbl111.ggo12.entity.Player;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.level.tile.GrassTile;
@@ -47,6 +48,10 @@ public class Level {
 		for (int i = 0; i < w * h; i++) {
 			entitiesInTiles[i] = new ArrayList<Entity>();
 		}
+		EntityBlock eb = new EntityBlock();
+		add(eb);
+		eb.x = 64;
+		eb.y = 64;
 	}
 
 	public void tick() {
@@ -162,7 +167,7 @@ public class Level {
 	}
 
 	public Tile getTile(int x, int y) {
-		if (x < 0 || y < 0 || x >= w || y >= h){
+		if (x < 0 || y < 0 || x >= w || y >= h) {
 			Tile tile = new RockTile(new GrassTile());
 			tile.init(this, x, y);
 			return tile;
@@ -175,7 +180,7 @@ public class Level {
 		int y = (int) pos.y / Tile.HEIGHT;
 		return getTile(x, y);
 	}
-	
+
 	public List<Entity> getEntities(int x0, int y0, int x1, int y1) {
 		List<Entity> result = new ArrayList<Entity>();
 		int xt0 = x0 >> 4;
