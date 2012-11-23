@@ -208,14 +208,17 @@ public class Level {
 	}
 
 	public void onClick(int x, int y) {
-
 		int xa = x + game.getXScroll();
 		int ya = y + game.getYScroll();
-		int xt = xa >> 4;
-		int yt = ya >> 4;
-
-		getTile(xt, yt).onClick();
-
+		List<Entity> entities = getEntities(xa, ya, xa, ya);
+		if (entities.size() > 0) {
+			Collections.sort(entities, spriteSorter);
+			entities.get(0).onClick();
+		} else {
+			int xt = xa >> 4;
+			int yt = ya >> 4;
+			getTile(xt, yt).onClick();
+		}
 	}
 
 }

@@ -41,5 +41,9 @@ public class Player extends Mob {
 	public void render(Screen screen) {
 		screen.draw(Art.PLAYERS[textureIndex % 16][textureIndex / 16], x - radius.x, y - radius.y, 0);
 	}
+	
+	public void onClick() {
+		System.out.println("Clicked the player!");
+	}
 
 }

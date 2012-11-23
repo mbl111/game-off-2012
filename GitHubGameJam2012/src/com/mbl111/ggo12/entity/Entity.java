@@ -148,7 +148,10 @@ public class Entity {
 	}
 
 	public boolean intersects(int x0, int y0, int x1, int y1) {
-		return !(x + radius.x < x0 || y + radius.y  < y0 || x - radius.x  > x1 || y - radius.y > y1);
+		return !(x + radius.x < x0 || y + radius.y < y0 || x - radius.x > x1 || y - radius.y > y1);
+	}
+
+	public void onClick() {
 	}
 
 }
