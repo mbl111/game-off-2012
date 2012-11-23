@@ -5,18 +5,12 @@ import com.mbl111.ggo12.gfx.Art;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.level.Level;
 
-public class RockTile extends Tile {
+public class RockTile extends OverlayTile {
 
-	private int underTileImage;
 
 	public RockTile(Tile floor) {
-		this.underTileImage = floor.img;
+		super(floor);
 		img = 2 + 1 * 16;
-	}
-
-	public void render(Screen screen) {
-		screen.draw(Art.TILES[underTileImage % 16][underTileImage / 16], x * WIDTH, y * HEIGHT, 0);
-		super.render(screen);
 	}
 
 	public boolean mayPass(Entity entity) {

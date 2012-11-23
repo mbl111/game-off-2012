@@ -11,6 +11,7 @@ import com.mbl111.ggo12.entity.Entity;
 import com.mbl111.ggo12.entity.EntityBlock;
 import com.mbl111.ggo12.entity.Player;
 import com.mbl111.ggo12.gfx.Screen;
+import com.mbl111.ggo12.level.tile.DryGrass;
 import com.mbl111.ggo12.level.tile.GrassTile;
 import com.mbl111.ggo12.level.tile.RockTile;
 import com.mbl111.ggo12.level.tile.Tile;
@@ -42,6 +43,9 @@ public class Level {
 			for (int y = 0; y < h; y++) {
 				Tile tile = new GrassTile();
 				setTile(x, y, tile, false);
+				if (SyncRandom.nextInt(5) == 0) {
+					setTile(x, y, new DryGrass(tile), false);
+				}
 			}
 		}
 
