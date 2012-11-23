@@ -16,7 +16,7 @@ public class BoundingBox {
 	}
 
 	public boolean intersects(int xx0, int yy0, int xx1, int yy1) {
-		return xx0 >= x0 || yy0 >= y0 || x1 <= xx1 || y1 <= yy1;
+		return !(xx1 < x0 || yy1 < y0 || xx0 > x1 || yy0 > y1);
 	}
 
 	public boolean intersects(BoundingBox bb) {

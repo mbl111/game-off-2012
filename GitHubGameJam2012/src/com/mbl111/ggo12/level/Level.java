@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.mbl111.ggo12.Game;
 import com.mbl111.ggo12.Util.SyncRandom;
 import com.mbl111.ggo12.Util.Vector2i;
 import com.mbl111.ggo12.entity.Entity;
@@ -20,6 +21,7 @@ public class Level {
 
 	public Tile[] tiles;
 	public int w, h;
+	public Game game;
 
 	public List<Entity>[] entitiesInTiles;
 	public List<Entity> entities = new ArrayList<Entity>();
@@ -34,8 +36,9 @@ public class Level {
 		}
 	};
 
-	public Level(int w, int h) {
+	public Level(int w, int h, Game game) {
 		tiles = new Tile[w * h];
+		this.game = game;
 		entitiesInTiles = new ArrayList[w * h];
 		this.w = w;
 		this.h = h;
@@ -202,6 +205,17 @@ public class Level {
 			}
 		}
 		return result;
+	}
+
+	public void onClick(int x, int y) {
+
+		int xa = x + game.getXScroll();
+		int ya = y + game.getYScroll();
+		int xt = xa >> 4;
+		int yt = ya >> 4;
+
+		getTile(xt, yt).onClick();
+
 	}
 
 }

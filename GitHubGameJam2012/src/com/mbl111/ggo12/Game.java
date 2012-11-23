@@ -13,6 +13,7 @@ import com.mbl111.ggo12.entity.Player;
 import com.mbl111.ggo12.gfx.Font;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.gfx.menu.ExceptionMenu;
+import com.mbl111.ggo12.gfx.menu.InGameGUI;
 import com.mbl111.ggo12.gfx.menu.Menu;
 import com.mbl111.ggo12.gfx.menu.MenuStack;
 import com.mbl111.ggo12.input.Input;
@@ -44,6 +45,7 @@ public class Game extends Canvas implements Runnable {
 	private MenuStack menuStack = new MenuStack(this);
 	private Level level;
 	private Player player;
+	private InGameGUI gui;
 
 	public Game() {
 		Dimension d = new Dimension(GAME_WIDTH * SCALE, GAME_HEIGHT * SCALE);
@@ -80,9 +82,10 @@ public class Game extends Canvas implements Runnable {
 
 	public void init() {
 		screen = new Screen(GAME_WIDTH, GAME_HEIGHT);
-		level = new Level(128, 128);
+		level = new Level(128, 128, this);
 		inputHandle = new InputHandler(this);
 		input = new Input();
+		gui = new InGameGUI(this);
 		player = new Player(this);
 		player.x = 0;
 		player.y = 0;
@@ -163,6 +166,7 @@ public class Game extends Canvas implements Runnable {
 			menuStack.tick();
 		} else {
 			level.tick();
+			gui.tick(input);
 		}
 	}
 
@@ -176,14 +180,9 @@ public class Game extends Canvas implements Runnable {
 		Graphics g = bs.getDrawGraphics();
 		g.fillRect(0, 0, getWidth(), getHeight());
 
-		int xScroll = player.x - screen.w / 2 + 8;
-		int yScroll = player.y - screen.h / 2 + 8;
+		int xScroll = getXScroll();
+		int yScroll = getYScroll();
 
-		if (xScroll < -32) xScroll = -32;
-		if (yScroll < -32) yScroll = -32;
-		if (xScroll > level.w * 16 - screen.w + 32) xScroll = level.w * 16 - screen.w + 32;
-		if (yScroll > level.h * 16 - screen.h + 32) yScroll = level.h * 16 - screen.h + 32;
-		
 		screen.clear(0xFF333333);
 		if (menuStack.getMenuSize() > 0) {
 			menuStack.render(screen);
@@ -214,6 +213,24 @@ public class Game extends Canvas implements Runnable {
 		Game game = new Game();
 		game.createWindow();
 		game.start();
+	}
+
+	public Level getCurrentLevel() {
+		return level;
+	}
+
+	public int getXScroll() {
+		int xScroll = player.x - screen.w / 2 + 8;
+		if (xScroll < -32) xScroll = -32;
+		if (xScroll > level.w * 16 - screen.w + 32) xScroll = level.w * 16 - screen.w + 32;
+		return xScroll;
+	}
+
+	public int getYScroll() {
+		int yScroll = player.y - screen.h / 2 + 8;
+		if (yScroll < -32) yScroll = -32;
+		if (yScroll > level.h * 16 - screen.h + 32) yScroll = level.h * 16 - screen.h + 32;
+		return yScroll;
 	}
 
 }

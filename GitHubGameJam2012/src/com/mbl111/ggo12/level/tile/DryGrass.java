@@ -10,4 +10,8 @@ public class DryGrass extends OverlayTile {
 		img = 3 + 0 * 16;
 	}
 
+	public void onClick() {
+		level.setTile(x, y, underTile, false);
+	}
+
 }

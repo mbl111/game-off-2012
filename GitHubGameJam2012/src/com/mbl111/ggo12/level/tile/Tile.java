@@ -40,4 +40,7 @@ public class Tile {
 	public void bumpInto(Entity entity) {
 	}
 
+	public void onClick() {
+	}
+
 }
