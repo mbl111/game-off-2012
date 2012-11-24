@@ -28,7 +28,7 @@ public class InGameGUI {
 	}
 
 	public void render(Screen screen) {
-
+		
 	}
 
 }

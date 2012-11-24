@@ -219,6 +219,10 @@ public class Game extends Canvas implements Runnable {
 		return level;
 	}
 
+	public Player getPlayer(){
+		return player;
+	}
+	
 	public int getXScroll() {
 		int xScroll = player.x - screen.w / 2 + 8;
 		if (xScroll < -32) xScroll = -32;
