@@ -87,8 +87,6 @@ public class Game extends Canvas implements Runnable {
 		input = new Input();
 		gui = new InGameGUI(this);
 		player = new Player(this);
-		player.x = 0;
-		player.y = 0;
 		level.add(player);
 	}
 
@@ -102,7 +100,7 @@ public class Game extends Canvas implements Runnable {
 		int ticks = 0;
 
 		init();
-
+		requestFocus();
 		while (running && !CLOSE_REQUESTED) {
 
 			// if (!hasFocus()) keys.release();
@@ -219,10 +217,10 @@ public class Game extends Canvas implements Runnable {
 		return level;
 	}
 
-	public Player getPlayer(){
+	public Player getPlayer() {
 		return player;
 	}
-	
+
 	public int getXScroll() {
 		int xScroll = player.x - screen.w / 2 + 8;
 		if (xScroll < -32) xScroll = -32;

@@ -84,4 +84,21 @@ public class Bitmap {
 		}
 	}
 
+	public void drawShaddow(Bitmap bitmap, int x, int y, int col, int data) {
+		for (int yy = 0; yy < bitmap.h; yy++) {
+			int ty = y + yy;
+			if (ty < 0 | ty >= h) continue;
+			int ys = yy;
+			if ((Y_MIRROR & data) > 0) ys = bitmap.h - 1 - yy;
+			for (int xx = 0; xx < bitmap.w; xx++) {
+				int tx = x + xx;
+				if (tx < 0 | tx >= w) continue;
+				int xs = xx;
+				if ((X_MIRROR & data) > 0) xs = bitmap.w - 1 - xx;
+				int color = bitmap.pixels[xs + ys * bitmap.w];
+				if (color != transparent) pixels[tx + ty * w] = col;
+			}
+		}
+	}
+
 }

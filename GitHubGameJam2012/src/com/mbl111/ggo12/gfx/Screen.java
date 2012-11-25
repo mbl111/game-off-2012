@@ -29,6 +29,10 @@ public class Screen extends Bitmap {
 		this.yOffset = y;
 	}
 
+	public void drawShaddow(Bitmap bitmap, int x, int y, int col, int data) {
+		super.drawShaddow(bitmap, x - xOffset, y - yOffset, col, data);
+	}
+
 	public void drawWithWash(Bitmap bitmap, int x, int y, int col, int data, boolean b) {
 		if (b) {
 			super.drawWithWash(bitmap, x - xOffset, y - yOffset, col, data);

@@ -5,14 +5,21 @@ import com.mbl111.ggo12.Util.Vector2i;
 import com.mbl111.ggo12.gfx.Art;
 import com.mbl111.ggo12.gfx.Screen;
 import com.mbl111.ggo12.input.Input;
+import com.mbl111.ggo12.inventory.Inventory;
+import com.mbl111.ggo12.inventory.Item;
+import com.mbl111.ggo12.inventory.ItemStack;
 
 public class Player extends Mob {
 
 	public Game game;
 	public int dir;
+	private Inventory inventory;
 
 	public Player(Game game) {
 		this.game = game;
+		this.x = 8;
+		this.y = 8;
+		this.inventory = new Inventory("Inventory");
 	}
 
 	public void tick() {
@@ -41,9 +48,17 @@ public class Player extends Mob {
 	public void render(Screen screen) {
 		screen.draw(Art.PLAYERS[textureIndex % 16][textureIndex / 16], x - radius.x, y - radius.y, 0);
 	}
-	
+
 	public void onClick() {
 		System.out.println("Clicked the player!");
+		for (int i = 0; i < inventory.items.size(); i++) {
+			ItemStack is = inventory.items.get(i);
+			System.out.println(is.getItem().getName() + " - " + is.stackSize);
+		}
+	}
+
+	public Inventory getInventory() {
+		return inventory;
 	}
 
 }

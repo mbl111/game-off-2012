@@ -14,4 +14,12 @@ public class SyncRandom {
 		return ran.nextInt(i);
 	}
 
+	public static double nextGaussian() {
+		return ran.nextGaussian();
+	}
+
+	public static float nextFloat() {
+		return ran.nextFloat();
+	}
+
 }

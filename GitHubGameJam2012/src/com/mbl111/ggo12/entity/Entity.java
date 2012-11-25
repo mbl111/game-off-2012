@@ -11,16 +11,14 @@ import com.mbl111.ggo12.level.tile.Tile;
 
 public class Entity {
 
-	public int x;
-	public int y;
+	public int x = 0;
+	public int y = 0;
 	public int textureIndex;
 	private boolean removed = false;
 	private Level level;
 	public Vector2i radius = new Vector2i(8, 8);
 
 	public void init(Level level) {
-		x = 8;
-		y = 8;
 		this.level = level;
 		init();
 	}
@@ -140,7 +138,6 @@ public class Entity {
 	}
 
 	public void tick() {
-		x++;
 	}
 
 	public boolean isRemoved() {

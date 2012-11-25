@@ -37,6 +37,16 @@ public class Item {
 		return itemName;
 	}
 
+	public int getMaxStackSize() {
+		return maxStackSize;
+	}
+
+	public Item setMaxStackSize(int maxStackSize) {
+		this.maxStackSize = maxStackSize;
+		return this;
+	}
+
 	public static Item[] itemsList = new Item[256];
+	public static Item dryGrass = new Item(0).setName("Dry Grass").setIconIndex(0, 0).setMaxStackSize(2);
 
 }

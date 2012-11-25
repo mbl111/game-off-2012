@@ -12,6 +12,7 @@ public class Art {
 	public static final Bitmap[][] PLAYERS = load(16, 16, "/entity/player.png");
 	public static final Bitmap[][] TILES = load(16, 16, "/tiles.png");
 	public static final Bitmap[][] FONT = load(8, 8, "/font.png");
+	public static final Bitmap[][] ITEMS = load(8, 8, "/items.png");
 
 	public static Bitmap[][] load(int sx, int sy, int w, int h, String file) {
 		try {
