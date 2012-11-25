@@ -21,7 +21,7 @@ public class DryGrass extends OverlayTile {
 		double dist = Math.sqrt((x - xt) * (x - xt) + (y - yt) * (y - yt));
 		if (dist < 2) {
 			level.setTile(x, y, underTile, false);
-			level.add(new EntityItem(new ItemStack(Item.dryGrass.id, 5), (x << 4) + 8, (y << 4) + 8));
+			level.add(new EntityItem(new ItemStack(Item.dryGrass.id), (x << 4) + 8, (y << 4) + 8));
 		}
 	}
 
