@@ -1,5 +1,8 @@
 package com.mbl111.ggo12.inventory;
 
+import com.mbl111.ggo12.gfx.Art;
+import com.mbl111.ggo12.gfx.Bitmap;
+
 public class Item {
 
 	public int id;
@@ -31,6 +34,10 @@ public class Item {
 
 	public int getItemIndex() {
 		return iconIndex;
+	}
+
+	public Bitmap getIcon() {
+		return Art.ITEMS[iconIndex % 16][iconIndex / 16];
 	}
 
 	public String getName() {

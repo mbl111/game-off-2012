@@ -27,7 +27,7 @@ public class InGameGUI {
 				game.getCurrentLevel().onClick(input.x, input.y);
 			}
 		}
-		if (input.down.typed) {
+		if (input.inventory.typed) {
 			game.setMenu(new InventoryMenu(game.getPlayer().getInventory()));
 		}
 	}

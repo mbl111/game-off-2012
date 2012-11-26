@@ -55,12 +55,12 @@ public class Input {
 	public Key left = new Key(this).bind(KeyEvent.VK_LEFT).bind(KeyEvent.VK_A);
 	public Key right = new Key(this).bind(KeyEvent.VK_RIGHT).bind(KeyEvent.VK_D);
 	public Key select = new Key(this).bind(KeyEvent.VK_ENTER);
-	
+	public Key inventory = new Key(this).bind(KeyEvent.VK_E);
+
 	public Key rawup = new Key(this).bind(KeyEvent.VK_UP);
 	public Key rawdown = new Key(this).bind(KeyEvent.VK_DOWN);
 	public Key rawleft = new Key(this).bind(KeyEvent.VK_LEFT);
 	public Key rawright = new Key(this).bind(KeyEvent.VK_RIGHT);
-
 
 	public Input() {
 	}
@@ -74,7 +74,6 @@ public class Input {
 		b1Released = this.b1 && !b1;
 		b2Released = this.b2 && !b2;
 
-		
 		this.x = x;
 		this.y = y;
 		this.b0 = b0;
