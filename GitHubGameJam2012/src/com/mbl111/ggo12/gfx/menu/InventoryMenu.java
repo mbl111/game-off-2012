@@ -14,7 +14,7 @@ public class InventoryMenu extends Menu {
 
 	public InventoryMenu(Inventory inventory) {
 		this.inventory = inventory;
-		Button play = new Button(Game.GAME_WIDTH /2 - 36, Game.GAME_HEIGHT - 20, 72, 16, 0).setText("Close!");
+		Button play = new Button(Game.GAME_WIDTH / 2 - 36, Game.GAME_HEIGHT - 20, 72, 16, 0).setText("Close!");
 		play.setClickListener(new ClickListener(this) {
 			public void onClick() {
 				game.setMenu(null);
