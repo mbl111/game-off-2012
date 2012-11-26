@@ -24,6 +24,10 @@ public class Screen extends Bitmap {
 		super.draw(bitmap, x - xOffset, y - yOffset, data);
 	}
 
+	public void draw(Bitmap bitmap, int x, int y) {
+		super.draw(bitmap, x - xOffset, y - yOffset, 0);
+	}
+
 	public void setOffset(int x, int y) {
 		this.xOffset = x;
 		this.yOffset = y;

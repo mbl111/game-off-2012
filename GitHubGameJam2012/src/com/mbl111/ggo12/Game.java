@@ -161,7 +161,7 @@ public class Game extends Canvas implements Runnable {
 	private void tick() {
 		input = inputHandle.updateMouseStatus(SCALE);
 		if (menuStack.getMenuSize() > 0) {
-			menuStack.tick();
+			menuStack.tick(input);
 		} else {
 			level.tick();
 			gui.tick(input);

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mbl111.ggo12.Game;
 import com.mbl111.ggo12.gfx.Screen;
+import com.mbl111.ggo12.input.Input;
 
 public class MenuStack {
 
@@ -28,14 +29,14 @@ public class MenuStack {
 		menus.remove(menu);
 	}
 
-	public void tick() {
+	public void tick(Input input) {
 		int i = menus.size() - 1;
 		Menu m = menus.get(i);
-		m.tick();
+		m.tick(input);
 		while (!m.isFullScreen() && i >= 0) {
 			i--;
 			m = menus.get(i);
-			m.tick();
+			m.tick(input);
 		}
 	}
 

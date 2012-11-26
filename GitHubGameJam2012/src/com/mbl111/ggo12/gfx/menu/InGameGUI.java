@@ -3,6 +3,8 @@ package com.mbl111.ggo12.gfx.menu;
 import com.mbl111.ggo12.Game;
 import com.mbl111.ggo12.Util.BoundingBox;
 import com.mbl111.ggo12.gfx.Screen;
+import com.mbl111.ggo12.gfx.menu.component.Button;
+import com.mbl111.ggo12.gfx.menu.component.ClickListener;
 import com.mbl111.ggo12.input.Input;
 
 public class InGameGUI {
@@ -25,10 +27,13 @@ public class InGameGUI {
 				game.getCurrentLevel().onClick(input.x, input.y);
 			}
 		}
+		if (input.down.typed) {
+			game.setMenu(new InventoryMenu(game.getPlayer().getInventory()));
+		}
 	}
 
 	public void render(Screen screen) {
-		
+
 	}
 
 }
