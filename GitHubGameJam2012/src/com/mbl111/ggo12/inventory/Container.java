@@ -12,6 +12,7 @@ public class Container {
 
 	public int amountPerRow = 4;
 	public Input input;
+	int x, y;
 
 	public List<Slot> slots = new ArrayList<Slot>();
 
@@ -27,8 +28,8 @@ public class Container {
 		int i = slot.slotId;
 		int row = i / amountPerRow;
 		int posInRow = i % amountPerRow;
-		int xa = (Game.GAME_WIDTH) / 2 - (amountPerRow * 11) + (posInRow * 22);
-		int ya = 11 * row + 5;
+		int xa = (posInRow * 22) + x;
+		int ya = 11 * row + 5 + y;
 		int mx = input.x;
 		int my = input.y;
 		return new BoundingBox(xa, ya, xa + slot.WIDTH, ya + slot.HEIGHT).intersects(mx, my, mx, my);
@@ -38,7 +39,17 @@ public class Container {
 		for (int i = 0; i < slots.size(); i++) {
 			int row = i / amountPerRow;
 			int posInRow = i % amountPerRow;
-			slots.get(i).render(screen, (screen.w) / 2 - (amountPerRow * 11) + (posInRow * 22), 11 * row + 5);
+			slots.get(i).render(screen, (posInRow * 22) + x, 11 * row + 5 + y);
 		}
+	}
+
+	public Slot grabSelected() {
+		for (int i = 0; i < slots.size(); i++) {
+			Slot slot = slots.get(i);
+			if (isMouseOver(slot)) {
+				return slot;
+			}
+		}
+		return null;
 	}
 }

@@ -37,12 +37,13 @@ public class Slot {
 	}
 
 	public void render(Screen screen, int x, int y) {
+		screen.draw(Art.INVENTORYSQUARE, x, y);
 		if (parent.isMouseOver(this)) {
-			screen.fill(0x99AAAAAA, x, y - 1, WIDTH, HEIGHT, 0);
+			screen.fill(0x99AAAAAA, x + 1, y + 1, WIDTH - 1, HEIGHT - 1, 0);
 		}
 		if (hasItems()) {
-			screen.draw(items.getItem().getIcon(), x, y);
-			Font.draw("" + items.stackSize, x + 10, y, 0xFFFFFFFF, screen);
+			screen.draw(items.getItem().getIcon(), x + 1, y + 2);
+			Font.draw("" + items.stackSize, x + 11, y + 2, 0xFFFFFFFF, screen);
 		}
 	}
 

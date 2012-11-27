@@ -18,11 +18,13 @@ public class Menu {
 	private int actionCooldown = 0;
 	private boolean initialised = false;
 	public int lastClickedIndex = -1;
+	protected Input input;
 
 	public void tick(Input input) {
 		if (initialised) {
 			int x = input.x;
 			int y = input.y;
+			this.input = input;
 			for (MenuComponent e : components) {
 				boolean over = e.isOver(x, y);
 				e.tick(tickCount, input);
