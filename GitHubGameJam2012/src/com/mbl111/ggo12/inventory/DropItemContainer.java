@@ -10,11 +10,12 @@ public class DropItemContainer extends Container {
 
 	private Slot dropItem;
 	public int x, y;
+	
 
 	public DropItemContainer(int x, int y) {
 		this.x = x;
 		this.y = y;
-		slots.add(new Slot(this, 0));
+		slots.add(new DropSlot(this, 0));
 	}
 
 	public boolean isMouseOver(Slot slot) {

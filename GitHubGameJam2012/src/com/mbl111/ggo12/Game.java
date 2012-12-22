@@ -43,9 +43,10 @@ public class Game extends Canvas implements Runnable {
 	private int gameTicks;
 	private Screen screen;
 	private MenuStack menuStack = new MenuStack(this);
-	private Level level;
+	public Level level;
 	private Player player;
 	private InGameGUI gui;
+	public static Game instance;
 
 	public Game() {
 		Dimension d = new Dimension(GAME_WIDTH * SCALE, GAME_HEIGHT * SCALE);
@@ -53,7 +54,7 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(d);
 		setMaximumSize(d);
 		setMinimumSize(d);
-
+		instance = this;
 	}
 
 	public void createWindow() {

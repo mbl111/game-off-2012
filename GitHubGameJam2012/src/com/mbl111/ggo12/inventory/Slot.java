@@ -36,6 +36,10 @@ public class Slot {
 		return items;
 	}
 
+	public void putItem(ItemStack is) {
+		items = is;
+	}
+
 	public void render(Screen screen, int x, int y) {
 		screen.draw(Art.INVENTORYSQUARE, x, y);
 		if (parent.isMouseOver(this)) {

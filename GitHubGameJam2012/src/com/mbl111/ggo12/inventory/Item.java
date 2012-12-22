@@ -54,6 +54,6 @@ public class Item {
 	}
 
 	public static Item[] itemsList = new Item[256];
-	public static Item dryGrass = new Item(0).setName("Dry Grass").setIconIndex(0, 0).setMaxStackSize(2);
+	public static Item dryGrass = new Item(0).setName("Dry Grass").setIconIndex(0, 0).setMaxStackSize(8);
 
 }

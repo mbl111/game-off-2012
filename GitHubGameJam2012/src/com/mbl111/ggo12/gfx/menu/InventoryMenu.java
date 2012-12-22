@@ -10,6 +10,7 @@ import com.mbl111.ggo12.inventory.Container;
 import com.mbl111.ggo12.inventory.DropItemContainer;
 import com.mbl111.ggo12.inventory.Inventory;
 import com.mbl111.ggo12.inventory.InventoryContainer;
+import com.mbl111.ggo12.inventory.Item;
 import com.mbl111.ggo12.inventory.ItemStack;
 import com.mbl111.ggo12.inventory.Slot;
 
@@ -52,15 +53,15 @@ public class InventoryMenu extends Menu {
 				if (slot.getItem() != null) {
 					if (selected != null) {
 						ItemStack spare = slot.items;
-						slot.items = selected;
+						slot.putItem(selected);
 						selected = spare;
 					} else {
 						selected = slot.items;
-						slot.items = null;
+						slot.putItem(null);
 					}
 				} else {
 					if (selected != null) {
-						slot.items = selected;
+						slot.putItem(selected);
 						selected = null;
 					}
 				}
@@ -73,7 +74,13 @@ public class InventoryMenu extends Menu {
 	}
 
 	private void closeInventory() {
-
+		inventory.items.clear();
+		for (int i = 0; i < container.slots.size(); i++) {
+			Slot s = container.slots.get(i);
+			if (s.getItem() != null) {
+				inventory.addItem(s.getItem());
+			}
+		}
 	}
 
 	public boolean isFullScreen() {
