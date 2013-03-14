@@ -83,7 +83,7 @@ public class Level {
 	}
 
 	public void setTile(int xt, int yt, Tile tile, boolean physics) {
-		if (xt < 0 | xt >= w | yt < 0 | yt >= h) return;
+		if (xt < 0 | xt >= w | yt < 0 | yt >= h) return;  
 		tiles[xt + yt * w] = tile;
 		tile.init(this, xt, yt);
 		if (physics) {

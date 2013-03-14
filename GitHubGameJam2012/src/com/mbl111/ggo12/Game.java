@@ -19,6 +19,7 @@ import com.mbl111.ggo12.gfx.menu.MenuStack;
 import com.mbl111.ggo12.input.Input;
 import com.mbl111.ggo12.input.InputHandler;
 import com.mbl111.ggo12.level.Level;
+import com.mbl111.ggo12.level.MainWorld;
 import com.mbl111.ggo12.level.tile.Tile;
 
 public class Game extends Canvas implements Runnable {
@@ -27,7 +28,7 @@ public class Game extends Canvas implements Runnable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static final int GAME_WIDTH = 220;
+	public static final int GAME_WIDTH = 480 / 2;
 	public static final int GAME_HEIGHT = GAME_WIDTH * 3 / 4;
 	public static final int SCALE = 3;
 	public static final String GAME_NAME = "";
@@ -83,7 +84,7 @@ public class Game extends Canvas implements Runnable {
 
 	public void init() {
 		screen = new Screen(GAME_WIDTH, GAME_HEIGHT);
-		level = new Level(128, 128, this);
+		level = new MainWorld(12, 12, this, "/level/main.png");
 		inputHandle = new InputHandler(this);
 		input = new Input();
 		gui = new InGameGUI(this);
