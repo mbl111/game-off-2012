@@ -25,7 +25,7 @@ public class Player extends Mob {
 	public void tick() {
 		Input input = game.getInput();
 		Vector2i move = new Vector2i(0, 0);
-		int speed = 1;
+		int speed = 3;
 		if (input.down.down) {
 			move.y += speed;
 			dir = 0;

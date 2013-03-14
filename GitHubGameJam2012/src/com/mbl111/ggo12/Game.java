@@ -28,9 +28,9 @@ public class Game extends Canvas implements Runnable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static final int GAME_WIDTH = 480 / 2;
+	public static final int GAME_WIDTH = 480 / 1;
 	public static final int GAME_HEIGHT = GAME_WIDTH * 3 / 4;
-	public static final int SCALE = 3;
+	public static final int SCALE = 2;
 	public static final String GAME_NAME = "";
 
 	public JFrame frame;
@@ -84,7 +84,7 @@ public class Game extends Canvas implements Runnable {
 
 	public void init() {
 		screen = new Screen(GAME_WIDTH, GAME_HEIGHT);
-		level = new MainWorld(12, 12, this, "/level/main.png");
+		level = new MainWorld(256, 256, this, "/level/main.png");
 		inputHandle = new InputHandler(this);
 		input = new Input();
 		gui = new InGameGUI(this);
