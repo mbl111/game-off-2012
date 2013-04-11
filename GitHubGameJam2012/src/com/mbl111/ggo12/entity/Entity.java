@@ -3,6 +3,7 @@ package com.mbl111.ggo12.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mbl111.ggo12.Util.BoundingBox;
 import com.mbl111.ggo12.Util.Vector2i;
 import com.mbl111.ggo12.gfx.Art;
 import com.mbl111.ggo12.gfx.Screen;
@@ -17,6 +18,7 @@ public class Entity {
 	private boolean removed = false;
 	private Level level;
 	public Vector2i radius = new Vector2i(8, 8);
+	public boolean collideable = false;
 
 	public void init(Level level) {
 		this.level = level;
@@ -90,26 +92,24 @@ public class Entity {
 			isInside = new ArrayList<Entity>();
 		}
 
-		int xr = radius.x;
-		int yr = radius.y;
+		int xr = radius.x + (Tile.WIDTH);
+		int yr = radius.y + (Tile.HEIGHT);
 
 		wasInside = level.getEntities(x - xr, y - yr, x + xr, y + yr);
 		isInside = level.getEntities(x + xa - xr, y + ya - yr, x + xa + xr, y + ya + yr);
 		isInside.removeAll(wasInside);
 		for (int i = 0; i < isInside.size(); i++) {
 			Entity e = isInside.get(i);
-			if (e == this) continue;
-			e.touchBy(this);
-		}
-
-		for (int i = 0; i < isInside.size(); i++) {
-			Entity e = isInside.get(i);
-			if (e == this) continue;
-			if (e.blocks(this)) {
-				return false;
+			if (this.getBb().intersects(e.getBb())) {
+				System.out.println("COLLIDEZ");
+				if (e == this) continue;
+				e.touchBy(this);
+				if (e.blocks(this)) {
+					return false;
+				}
 			}
-
 		}
+
 		wasInside.clear();
 		isInside.clear();
 		hitResults.add(wasInside);
@@ -149,6 +149,14 @@ public class Entity {
 	}
 
 	public void onClick() {
+	}
+
+	public void setCollideable(boolean collide) {
+		collideable = collide;
+	}
+
+	public BoundingBox getBb() {
+		return new BoundingBox(x - radius.x, y - radius.y, x + radius.x, y + radius.y);
 	}
 
 }

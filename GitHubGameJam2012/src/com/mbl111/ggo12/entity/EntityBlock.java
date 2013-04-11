@@ -9,6 +9,10 @@ public class EntityBlock extends Entity {
 	private int pushDir = 0;
 	public String name;
 
+	public EntityBlock() {
+		this.setCollideable(true);
+	}
+
 	public void tick() {
 		if (pushDir == 0) move(0, +1);
 		if (pushDir == 1) move(0, -1);
@@ -19,7 +23,7 @@ public class EntityBlock extends Entity {
 	}
 
 	protected boolean blocks(Entity e) {
-		return true;
+		return this.collideable && e.collideable ? this.getBb().intersects(e.getBb()) : false;
 	}
 
 	public void touchBy(Entity entity) {

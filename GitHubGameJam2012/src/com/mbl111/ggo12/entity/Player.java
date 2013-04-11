@@ -1,6 +1,7 @@
 package com.mbl111.ggo12.entity;
 
 import com.mbl111.ggo12.Game;
+import com.mbl111.ggo12.Util.BoundingBox;
 import com.mbl111.ggo12.Util.Vector2i;
 import com.mbl111.ggo12.gfx.Art;
 import com.mbl111.ggo12.gfx.Screen;
@@ -20,12 +21,13 @@ public class Player extends Mob {
 		this.x = 8;
 		this.y = 8;
 		this.inventory = new Inventory("Inventory");
+		setCollideable(true);
 	}
 
 	public void tick() {
 		Input input = game.getInput();
 		Vector2i move = new Vector2i(0, 0);
-		int speed = 3;
+		int speed = 1;
 		if (input.down.down) {
 			move.y += speed;
 			dir = 0;
